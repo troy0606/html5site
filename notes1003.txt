@@ -1,0 +1,25 @@
+﻿
+
+a*b    b     ab  aab aaab  ...
+a+b    b(x)  ab  aab aaab  ... a{1,}b
+a?b    b     ab  aab(x)        a{0,1}b
+
+a.pdf
+a.doc
+a.xls
+/^    .pdf$/
+
+[xyz]  x y z  o(x)
+[0-9]
+[a-z]
+a123456789
+[a-zA-Z]{1}[1-2]{1}[0-9]{8}
+
+安裝
+C:\Shared\html5site> npm install serve-index
+
+引用 app.js
+var serveIndex = require('serve-index')
+
+使用 http://localhost:3000/
+app.use('/',serveIndex(path.join(__dirname, 'public')))

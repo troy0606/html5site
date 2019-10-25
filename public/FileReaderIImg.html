@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>File ReaderImg</title>
+    <style>
+        #zone {
+            width: 300px;
+            height: 150px;
+            border: 1px solid green;
+            margin: 10px;
+            overflow: auto;
+        }
+
+        .thumb {
+            height: 100px;
+            margin: 10px;
+            box-shadow: 3px 2px 4px silver;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="file" name="" id="field1" multiple>
+    <div id="zone"></div>
+    <script>
+        document.querySelector("#field1").addEventListener("change", function () {
+
+
+            for (let i = 0; i < this.files.length; i++) {
+                fileInfo(this.files[i]);
+            };
+
+        });
+        function fileInfo(theFile) {
+            // 讀取檔案內容
+            var reader = new FileReader();
+            reader.readAsDataURL(theFile);
+            //    讀取的檔案跟編碼
+            reader.addEventListener("load", function (event) {
+                var eleImg = document.createElement("img");
+                eleImg.setAttribute("src", event.target.result);
+                theZone.appendChild(eleImg);
+            })
+        }
+
+        // 第2種 透過檔案拖曳
+        var theZone = document.querySelector("#zone");
+        theZone.addEventListener("dragover", function (event) {
+            event.preventDefault();
+        })
+        theZone.addEventListener("drop", function () {
+            event.preventDefault();
+            event.stopPropagation();
+
+            for (let i = 0; i < event.dataTransfer.files.length; i++) {
+                fileInfo(event.dataTransfer.files[i]);
+                console.log(event.dataTransfer.files[i]);
+            };
+            
+        });
+    </script>
+</body>
+
+</html>

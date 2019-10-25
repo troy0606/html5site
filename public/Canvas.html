@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canvas Demo</title>
+    <style>
+        body {
+            display: flex;
+        }
+
+        div {
+            margin: 30px;
+        }
+
+        #myCanvas {
+            border: 1px solid green;
+        }
+
+        #myCanvas2 {
+            border: 1px solid red;
+        }
+
+        #myCanvas3 {
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+    <!--Canvas預設大小300寬150高-->
+    <div>
+        <canvas id="myCanvas" width="400px" height="300px">
+        </canvas>
+    </div>
+    <div>
+        <canvas id="myCanvas2" width="400px" height="300px">
+        </canvas>
+    </div>
+    <div>
+        <canvas id="myCanvas3" width="400px" height="300px">
+        </canvas>
+    </div>
+    <script>
+        var canvas = document.querySelector('#myCanvas');
+        var context = canvas.getContext('2d');
+        // 適用矩形的API(2D))
+        //畫筆顏色
+        context.fillStyle = "silver";
+        context.strokeStyle = "blue";
+        //畫筆粗細
+        context.lineWidth = 2;
+
+        // 陰影效果
+        context.shadowOffsetX = 5;
+        context.shadowOffsetY = 5;
+        context.shadowBlur = 4;
+        context.shadowColor = "silver";
+
+        //矩形
+        context.strokeRect(20, 20, 200, 90)
+        // 設定寬高，線條矩形(X，Y，W，H)
+        context.fillRect(20, 150, 200, 90)
+        // 設定寬高，填滿顏色的矩形
+        context.clearRect(150, 70, 100, 60)
+        // 清掉矩形
+
+
+        context.beginPath();
+        context.moveTo(150, 150);
+        context.lineTo(300, 150);
+        context.lineTo(300, 250);
+        context.lineJoin = "round";
+        context.closePath();
+        context.stroke();
+        context.fill();
+
+        //端點的樣式 lineCap = butt(default)、round、square
+        //端點銜接的樣式 lineJoin = miter(default)、bevel、round
+
+        // 畫圖片
+        var canvas2 = document.querySelector('#myCanvas2');
+        var context2 = canvas2.getContext('2d');
+        context2.fillStyle = "silver";
+        context2.strokeStyle = "blue";
+        context2.lineWidth = 2;
+
+        var imgObject = new Image();
+        imgObject.src = "images/cars.jpg";
+        imgObject.addEventListener("load", function () {
+            context2.drawImage(imgObject, 0, 0);
+            context2.drawImage(imgObject, 0, 0, 200, 150);
+            context2.drawImage(imgObject, 190, 85, 200, 180, 0, 0, 100, 90);
+        });
+
+        // 寫字
+        var canvas3 = document.querySelector('#myCanvas3');
+        var context3 = canvas3.getContext('2d');
+        context3.fillStyle = "silver";
+        context3.strokeStyle = "blue";
+        context3.lineWidth = 2;
+
+        context3.font = "48px arial";
+        context3.textAlign = "center";
+        var x = canvas3.width / 2;
+        var y = canvas3.height / 2;
+        context3.strokeText("Hello Canvas!!", x, y);
+
+    </script>
+</body>
+
+</html>

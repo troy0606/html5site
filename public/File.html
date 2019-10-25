@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>File object</title>
+    <style>
+        #zone{
+            width: 300px;
+            height: 150px;
+            border: 1px solid green;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" name="" id="field1">
+    <div id="zone"></div>
+    <script>
+        // 產生file物件的兩種方法
+        // 第一種
+        document.querySelector("#field1").addEventListener("change",function(){
+            console.log(this.files[0]);
+            fileInfo(this.files[0]);
+            //this.files[0]就是File Object
+        });
+        function fileInfo(theFile){
+            console.log(theFile.name); //檔案名稱
+            console.log(theFile.type); //檔案類型
+            console.log(theFile.size); //檔案大小
+            console.log(theFile.lastModifiedDate); //校正日期
+        }
+
+        // 第2種 透過檔案拖曳
+        var theZone = document.querySelector("#zone");
+        theZone.addEventListener("dragover",function(event){
+            event.preventDefault();
+        })
+        theZone.addEventListener("drop",function(){
+            event.preventDefault();
+            event.stopPropagation();
+            console.log(event.dataTransfer.files[0]);
+            fileInfo(event.dataTransfer.files[0]);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Notification</title>
+  </head>
+  <body>
+    <button id="button1">桌面提醒</button>
+    <script>
+      var btn = document.querySelector("#button1");
+      btn.addEventListener("click", load);
+      var notification;
+
+      function load() {
+        console.log(Notification.permission);
+        // Notification.permission預設為default
+        if (Notification.permission === "granted") {
+            // 如果Notification.permission == 允許
+          notification = new Notification("Benson", {
+            body: "You got a message",
+            icon: "images/profile photo.jpg"
+          });
+        //   新增一個notification物件
+          notification.addEventListener("show", function() {
+            setTimeout("Notification.close()", 3000);
+          });
+        } else if (Notification.permission === "default") {
+             // 如果Notification.permission == 預設
+          console.log("要求權限");
+          getPermission(load);
+        //   將load函式傳入執行requestPermission
+        } else {
+        // 如果Notification.permission == 拒絕
+          console.log("拒絕");
+        }
+      }
+
+      function getPermission(cb) {
+        //   會去重新呼叫呼叫requestPermission
+        Notification.requestPermission(cb);
+      }
+    </script>
+  </body>
+</html>

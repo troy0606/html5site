@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drag And Drop</title>
+    <style>
+      .zone{
+          width:600px;
+          height:150px;
+          border:1px solid green;
+          margin:10px;
+      }
+      .item{
+          width:100px;
+          height:50px;
+          background-color:lightgreen;
+          margin:5px;
+          float: left;
+          text-align: center;
+          vertical-align: middle;
+          line-height: 50px;
+
+      }
+      over{
+          border: 2px solid pink;
+      }
+    </style>
+</head>
+<body>
+    <div class="zone">
+        <div class="item" id="item1" draggable="true">Item1</div>
+        <div class="item" id="item2" draggable="true">Item2</div>        
+        <div class="item" id="item3" draggable="true">Item3</div>
+    </div>
+    <div class="zone" id="zone2"></div>
+
+    <script>
+        var items = document.querySelectorAll(".item");
+        for(let i = 0; i<items.length; i++){
+            items[i].addEventListener("dragstart",dragStartHandler);
+        }
+        function dragStartHandler(event){
+            console.log(event.target.id);
+            event.dataTransfer.setData("text/plain",event.target.id);
+            console.log(event);
+        }
+        var zones = document.querySelectorAll(".zone");
+        for( let i = 0 ; i<zones.length ; i++){
+            zones[i].addEventListener("dragenter",function(event){
+                event.preventDefault();
+                event.target.classList.add("over");
+            })
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+            zones[i].addEventListener("dragover",function(event){
+                event.preventDefault();
+                // 取消dragover的預設行為
+            })
+            zones[i].addEventListener("drop",dropHandler);
+        }
+        function dropHandler(event){
+            event.preventDefault();
+            event.stopPropagation();
+            // 停止氣泡事件
+            
+            var sid = event.dataTransfer.getData('text/plain');
+            var sobj = document.querySelector("#"+sid);
+            event.target.appendChild(sobj);
+
+            // event.target.appendChild(sobj.cloneNode(true));
+            // 將元素複製但不會清掉之前的
+        }
+    </script>
+</body>
+</html>

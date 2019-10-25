@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>File Reader</title>
+    <style>
+        #zone{
+            width: 300px;
+            height: 150px;
+            border: 1px solid green;
+            margin: 10px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" name="" id="field1">
+    <div id="zone"></div>
+    <script>
+        document.querySelector("#field1").addEventListener("change",function(){
+            console.log(this.files[0]);
+            fileInfo(this.files[0]);
+
+        });
+        function fileInfo(theFile){
+            // 讀取檔案內容
+           var reader = new FileReader();
+           reader.readAsText(theFile,"UTF-8");
+        //    讀取的檔案跟編碼
+           reader.addEventListener("load",function(event){
+            //    reader讀取結束後
+            theZone.textContent = event.target.result;
+            // 讀取結果放到theZone.textContent
+           })
+        }
+
+        // 第2種 透過檔案拖曳
+        var theZone = document.querySelector("#zone");
+        theZone.addEventListener("dragover",function(event){
+            event.preventDefault();
+        })
+        theZone.addEventListener("drop",function(){
+            event.preventDefault();
+            event.stopPropagation();
+            console.log(event.dataTransfer.files[0]);
+            fileInfo(event.dataTransfer.files[0]);
+        });
+    </script>
+</body>
+</html>
